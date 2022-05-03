@@ -8,6 +8,7 @@ const (
 	CMD_CANALES
 	CMD_SEND
 	CMD_SALIR
+	CMD_SALIRCANAL
 )
 
 type comandos struct {

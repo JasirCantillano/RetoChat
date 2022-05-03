@@ -10,7 +10,7 @@ import (
 type client struct {
 	conn     net.Conn
 	nombre   string
-	canales  *canales
+	canales  map[string]*canales
 	comandos chan<- comandos
 }
 
@@ -57,8 +57,14 @@ func (c *client) readInput() {
 				client: c,
 				args:   args,
 			}
+		case "/salirCanal":
+			c.comandos <- comandos{
+				id:     CMD_SALIRCANAL,
+				client: c,
+				args:   args,
+			}
 		default:
-			c.err(fmt.Errorf("Comando desconocido: %s", cmd))
+			c.err(fmt.Errorf("comando desconocido: %s", cmd))
 		}
 	}
 }
