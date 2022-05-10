@@ -3,8 +3,10 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"net"
+	"os"
 	"strings"
 )
 
@@ -64,6 +66,7 @@ func (s *server) subscribe(c *client, args []string) {
 		r = &canales{
 			nombre:   nombreCanal,
 			miembros: make(map[net.Addr]*client),
+			envios:   make(map[int]*archivos),
 		}
 		s.canales[nombreCanal] = r
 		c.canales[nombreCanal] = r
@@ -91,10 +94,43 @@ func (s *server) send(c *client, args []string) {
 	nombreCanal := args[1]
 
 	var contador1 int = 0
+	var contador2 int = 0
 	for k := range c.canales {
 		if c.canales[k].nombre == nombreCanal {
-			c.canales[nombreCanal].broadcast(c, c.nombre+" al canal "+args[1]+": "+strings.Join(args[2:len(args)], " "))
+			var directorio string = "archivos/" + c.canales[k].nombre
+			err := os.Mkdir(directorio, 0750)
+			if err != nil && !os.IsExist(err) {
+				log.Fatal(err)
+			}
+			var archivoOrigen string = "archivos/" + args[2]
+			origen, err := os.Open(archivoOrigen)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer origen.Close()
+			var archivoDestino string = directorio + "/" + args[2]
+			destino, err := os.OpenFile(archivoDestino, os.O_RDWR|os.O_CREATE, 0666)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer destino.Close()
+			io.Copy(destino, origen)
 			contador1++
+			for range s.canales[nombreCanal].envios {
+				contador2++
+			}
+			r, ok := s.canales[nombreCanal].envios[contador2]
+			if !ok {
+				r = &archivos{
+					nombre:    args[2],
+					cliente:   c.nombre,
+					direccion: c.conn.RemoteAddr(),
+				}
+				s.canales[nombreCanal].envios[contador2] = r
+				c.canales[nombreCanal].envios[contador2] = r
+			}
+			c.canales[nombreCanal].envios[contador2] = r
+			c.canales[nombreCanal].broadcast(c, c.nombre+" al canal "+args[1]+": "+strings.Join(args[2:len(args)], " ")+" enviado a este canal, revisalo en la carpeta: "+directorio)
 		}
 	}
 	if contador1 == 0 {
