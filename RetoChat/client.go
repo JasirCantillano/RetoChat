@@ -64,7 +64,7 @@ func (c *client) readInput() {
 				args:   args,
 			}
 		default:
-			c.err(fmt.Errorf("comando desconocido: %s", cmd))
+			c.err(fmt.Errorf("comando desconocido: %s ", cmd))
 		}
 	}
 }
@@ -76,3 +76,5 @@ func (c *client) err(err error) {
 func (c *client) msg(msg string) {
 	c.conn.Write([]byte("> " + msg + "\n"))
 }
+
+//Terminado

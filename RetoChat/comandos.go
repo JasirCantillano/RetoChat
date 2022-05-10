@@ -16,3 +16,5 @@ type comandos struct {
 	client *client
 	args   []string
 }
+
+//Terminado
