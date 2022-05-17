@@ -9,9 +9,9 @@ import (
 
 type client struct {
 	conn     net.Conn
-	nombre   string
-	canales  map[string]*canales
-	comandos chan<- comandos
+	name     string
+	channels map[string]*channels
+	commands chan<- commands
 }
 
 func (c *client) readInput() {
@@ -27,44 +27,44 @@ func (c *client) readInput() {
 		cmd := strings.TrimSpace(args[0])
 
 		switch cmd {
-		case "/nombre":
-			c.comandos <- comandos{
-				id:     CMD_NOMBRE,
+		case "/name":
+			c.commands <- commands{
+				id:     CMD_NAME,
 				client: c,
 				args:   args,
 			}
-		case "/subscribe":
-			c.comandos <- comandos{
-				id:     CMD_SUBSCRIBE,
+		case "/join":
+			c.commands <- commands{
+				id:     CMD_JOIN,
 				client: c,
 				args:   args,
 			}
-		case "/canales":
-			c.comandos <- comandos{
-				id:     CMD_CANALES,
+		case "/channels":
+			c.commands <- commands{
+				id:     CMD_CHANNELS,
 				client: c,
 				args:   args,
 			}
-		case "/enviar":
-			c.comandos <- comandos{
+		case "/send":
+			c.commands <- commands{
 				id:     CMD_SEND,
 				client: c,
 				args:   args,
 			}
-		case "/salir":
-			c.comandos <- comandos{
-				id:     CMD_SALIR,
+		case "/exit":
+			c.commands <- commands{
+				id:     CMD_EXIT,
 				client: c,
 				args:   args,
 			}
-		case "/salirCanal":
-			c.comandos <- comandos{
-				id:     CMD_SALIRCANAL,
+		case "/exitChannel":
+			c.commands <- commands{
+				id:     CMD_EXITCHANNEL,
 				client: c,
 				args:   args,
 			}
 		default:
-			c.err(fmt.Errorf("comando desconocido: %s ", cmd))
+			c.err(fmt.Errorf("unknown command: %s ", cmd))
 		}
 	}
 }
@@ -76,5 +76,3 @@ func (c *client) err(err error) {
 func (c *client) msg(msg string) {
 	c.conn.Write([]byte("> " + msg + "\n"))
 }
-
-//Terminado

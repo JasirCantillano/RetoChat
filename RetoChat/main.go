@@ -11,21 +11,19 @@ func main() {
 
 	listener, err := net.Listen("tcp", ":8888")
 	if err != nil {
-		log.Fatalf("No se pudo iniciar el servidor: %s", err.Error())
+		log.Fatalf("Could not start server: %s", err.Error())
 	}
 
 	defer listener.Close()
-	log.Printf("Servidor iniciado en puerto 8888")
+	log.Printf("Server started on port 8888")
 
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
-			log.Printf("No se pudo conectar: %s", err.Error())
+			log.Printf("Could not connect: %s", err.Error())
 			continue
 		}
 
 		go s.newClient(conn)
 	}
 }
-
-//Terminado

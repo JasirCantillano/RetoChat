@@ -1,7 +1,8 @@
-#Comandos
+#COMMANDS
 
-/nombre <NombreCliente> - Define el nombre a usar, de lo contrario sera anonimo
-/subscribe <Canal> - El cliente se suscribe a un canal, en caso que no exista el canal este se creara
-/enviar <Canal> <Mensaje> - El cliente envia un archivo a un canal especifico
-/canales - Listar todos los canales existentes
-/salir <Canal> - Apaga el servidor
+/name <ClientName> - Modify the name of the client, by default it will be anonymous
+/subscribe <Channel> - The client suscribes to a channel, if it does not exist it will be created
+/send <Channel> <FileName> - The client sends a file to a specific channels
+/channels - List all existing channels
+/exitChannel <Channel> - The client exit the specific channel
+/exit - The client exits all channels and leaves the server
