@@ -1,1 +1,1 @@
-[{"name":"#General","y":1,"drilldown":"#General"},{"name":"#Pokemon","y":2,"drilldown":"#Pokemon"},{"name":"#Digimon","y":2,"drilldown":"#Digimon"}]
+[{"name":"#Digimon","y":0,"drilldown":"#Digimon"},{"name":"#General","y":1,"drilldown":"#General"},{"name":"#Pokemon","y":0,"drilldown":"#Pokemon"}]

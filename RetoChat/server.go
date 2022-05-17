@@ -163,6 +163,10 @@ func (s *server) exit(c *client, args []string) {
 
 	c.msg("We look forward to your return :(")
 	c.conn.Close()
+
+	var w http.ResponseWriter
+	var v *http.Request
+	s.Start(w, v)
 }
 
 func (s *server) exitChannel(c *client, args []string) {
@@ -176,6 +180,10 @@ func (s *server) exitChannel(c *client, args []string) {
 			var messaje string = "We look forward to your return to the channel " + args[1] + " very soon :("
 			c.msg(messaje)
 			oldChannel.broadcast(c, fmt.Sprintf("%[1]s Left the channel %[2]s", c.name, args[1]))
+
+			var w http.ResponseWriter
+			var v *http.Request
+			s.Start(w, v)
 		}
 	}
 }

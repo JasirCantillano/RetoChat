@@ -1,26 +1,26 @@
 [
  {
-  "channelName": "#G",
+  "channelName": "#General",
   "clientName": "Jasir"
  },
  {
-  "channelName": "#G",
+  "channelName": "#General",
   "clientName": "Douglas"
  },
  {
-  "channelName": "#P",
+  "channelName": "#Pokemon",
   "clientName": "Jasir"
  },
  {
-  "channelName": "#P",
+  "channelName": "#Pokemon",
   "clientName": "Douglas"
  },
  {
-  "channelName": "#D",
+  "channelName": "#Digimon",
+  "clientName": "Jasir"
+ },
+ {
+  "channelName": "#Digimon",
   "clientName": "anonymous"
- },
- {
-  "channelName": "#D",
-  "clientName": "Jasir"
  }
 ]
